@@ -1,0 +1,6 @@
+pip install Flask
+pip install Flask-PyMongo
+pip install flask-jwt-extended
+pip install python-dotenv
+pip install Werkzeug
+pip install pytest

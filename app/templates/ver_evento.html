@@ -1,37 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{{ evento['nombre'] }}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ evento['nombre'] }}</title>
+  <!-- Add Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      min-height: 100vh;
+      padding: 2rem 0;
+    }
+
+    .content {
+      background: white;
+      color: #333;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .content h2 {
+      color: #6a11cb;
+    }
+
+    .btn-custom {
+      background-color: #6a11cb;
+      border: none;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      background-color: #2575fc;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <h2>{{ evento['nombre'] }}</h2>
-    <p><strong>Fecha:</strong> {{ evento['fecha'] }}</p>
-    <p><strong>Hora:</strong> {{ evento['hora'] }}</p>
-    <p><strong>Lugar:</strong> {{ evento['lugar'] }}</p>
-    <p><strong>Tipo:</strong> {{ evento['tipo'] }}</p>
-    <p><strong>Descripción:</strong><br>{{ evento['descripcion'] }}</p>
+  <div class="container">
+    <!-- Event Details Section -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="content">
+          <h2>{{ evento['nombre'] }}</h2>
 
-    <h3>Usuarios Registrados:</h3>
-    <ul>
-        {% if usuarios_registrados %}
-            {% for usuario in usuarios_registrados %}
-                <li>
-                    {{ usuario['usuario'] }}
-                    {% if session['usuario'] == usuario['usuario'] %}
-                        | <a href="{{ url_for('main.quitar_registro', evento_id=evento['_id']) }}">Quitar mi registro</a>
-                    {% endif %}
+          <p><strong>Fecha:</strong> {{ evento['fecha'] }}</p>
+          <p><strong>Hora:</strong> {{ evento['hora'] }}</p>
+          <p><strong>Lugar:</strong> {{ evento['lugar'] }}</p>
+          <p><strong>Tipo:</strong> {{ evento['tipo'] }}</p>
+          <p><strong>Descripción:</strong><br>{{ evento['descripcion'] }}</p>
+
+          <!-- Registered Users Section -->
+          <h3 class="mt-4">Usuarios Registrados:</h3>
+          <ul class="list-group mb-3">
+            {% if usuarios_registrados %}
+              {% for usuario in usuarios_registrados %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ usuario['usuario'] }}
+                  {% if session['usuario'] == usuario['usuario'] %}
+                    <a href="{{ url_for('main.quitar_registro', evento_id=evento['_id']) }}" class="btn btn-danger btn-sm">Quitar mi registro</a>
+                  {% endif %}
                 </li>
-            {% endfor %}
-        {% else %}
-            <li>No hay usuarios registrados aún.</li>
-        {% endif %}
-    </ul>
+              {% endfor %}
+            {% else %}
+              <li class="list-group-item">No hay usuarios registrados aún.</li>
+            {% endif %}
+          </ul>
 
-    {% if not ya_registrado %}
-        <a href="{{ url_for('main.registrarse_evento', evento_id=evento['_id']) }}">Registrarme a este evento</a>
-    {% endif %}
+          <!-- Registration Button -->
+          {% if not ya_registrado %}
+            <div class="d-grid mb-3">
+              <a href="{{ url_for('main.registrarse_evento', evento_id=evento['_id']) }}" class="btn btn-custom">Registrarme a este evento</a>
+            </div>
+          {% endif %}
 
-    <br><br>
-    <a href="{{ url_for('main.admin' if session['rol'] == 'admin' else 'main.ver_eventos') }}">Volver</a>
+          <!-- Back Button -->
+          <div class="text-center">
+            <a href="{{ url_for('main.admin' if session['rol'] == 'admin' else 'main.ver_eventos') }}" class="btn btn-outline-secondary">Volver</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
