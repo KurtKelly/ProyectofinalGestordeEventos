@@ -1,20 +1,31 @@
 <h2>Panel Administrador</h2>
+
 <form action="/crear" method="post">
-  <input name="nombre" placeholder="Nombre">
-  <input name="descripcion" placeholder="Descripción">
-  <input name="fecha" type="date">
-  <input name="hora" type="time">
-  <input name="lugar" placeholder="Lugar">
-  <input name="tipo" placeholder="Tipo">
+  <input name="nombre" placeholder="Nombre" required>
+  <input name="descripcion" placeholder="Descripción" required>
+  <input name="fecha" type="date" required>
+  <input name="hora" type="time" required>
+  <input name="lugar" placeholder="Lugar" required>
+  <input name="tipo" placeholder="Tipo" required>
   <button type="submit">Crear Evento</button>
 </form>
 
 <h3>Eventos</h3>
 <ul>
-  {% for evento in eventos %}
-    <li>
-      {{ evento['nombre'] }} - <a href="/eliminar/{{ evento['nombre'] }}">Eliminar</a>
-    </li>
-  {% endfor %}
+<h3>Eventos</h3>
+{% for evento in eventos %}
+  <div style="border: 1px solid gray; padding: 10px; margin: 10px;">
+    <h3>{{ evento['nombre'] }}</h3>
+    <p><strong>Fecha:</strong> {{ evento['fecha'] }} - <strong>Hora:</strong> {{ evento['hora'] }}</p>
+    <p><strong>Lugar:</strong> {{ evento['lugar'] }}</p>
+    <p><strong>Tipo:</strong> {{ evento['tipo'] }}</p>
+    <p><strong>Descripción:</strong> {{ evento['descripcion'] }}</p>
+
+    <a href="{{ url_for('main.editar_evento', evento_id=evento['_id']) }}">Editar</a> |
+    <a href="{{ url_for('main.eliminar_evento', evento_id=evento['_id']) }}">Eliminar</a> |
+    <a href="{{ url_for('main.ver_evento', evento_id=evento['_id']) }}">Ver usuarios registrados</a>
+  </div>
+{% endfor %}
 </ul>
+
 <a href="/logout">Cerrar Sesión</a>

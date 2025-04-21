@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>{{ evento['nombre'] }}</title>
 </head>
 <body>
-$END$
+    <h2>{{ evento['nombre'] }}</h2>
+    <p><strong>Fecha:</strong> {{ evento['fecha'] }}</p>
+    <p><strong>Hora:</strong> {{ evento['hora'] }}</p>
+    <p><strong>Lugar:</strong> {{ evento['lugar'] }}</p>
+    <p><strong>Tipo:</strong> {{ evento['tipo'] }}</p>
+    <p><strong>Descripción:</strong><br>{{ evento['descripcion'] }}</p>
+
+    <h3>Usuarios Registrados:</h3>
+    <ul>
+        {% if usuarios_registrados %}
+            {% for usuario in usuarios_registrados %}
+                <li>
+                    {{ usuario['usuario'] }}
+                    {% if session['usuario'] == usuario['usuario'] %}
+                        | <a href="{{ url_for('main.quitar_registro', evento_id=evento['_id']) }}">Quitar mi registro</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No hay usuarios registrados aún.</li>
+        {% endif %}
+    </ul>
+
+    {% if not ya_registrado %}
+        <a href="{{ url_for('main.registrarse_evento', evento_id=evento['_id']) }}">Registrarme a este evento</a>
+    {% endif %}
+
+    <br><br>
+    <a href="{{ url_for('main.admin' if session['rol'] == 'admin' else 'main.ver_eventos') }}">Volver</a>
 </body>
 </html>

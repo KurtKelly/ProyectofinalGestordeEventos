@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Editar Evento</title>
 </head>
 <body>
-$END$
+    <h2>Editar Evento</h2>
+    <form method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" value="{{ evento['nombre'] }}" required><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" value="{{ evento['fecha'] }}" required><br>
+
+        <label for="hora">Hora:</label>
+        <input type="time" name="hora" value="{{ evento['hora'] }}" required><br>
+
+        <label for="tipo">Tipo de Evento:</label>
+        <input type="text" name="tipo" value="{{ evento['tipo'] }}" required><br>
+
+        <label for="lugar">Lugar de Evento:</label>
+        <input type="text" name="lugar" value="{{ evento['lugar'] }}" required><br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" required>{{ evento['descripcion'] }}</textarea><br>
+
+        <input type="submit" value="Actualizar Evento">
+    </form>
+    <a href="{{ url_for('main.admin') }}">Volver al Panel</a>
 </body>
 </html>
+

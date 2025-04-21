@@ -1,10 +1,25 @@
 <h2>Eventos Disponibles</h2>
-<ul>
-  {% for evento in eventos %}
-    <li>
-      {{ evento['nombre'] }} - {{ evento['fecha'] }} - {{ evento['lugar'] }}
-      <a href="/registrarse/{{ evento['nombre'] }}">Registrarse</a>
-    </li>
-  {% endfor %}
-</ul>
+
+{% for evento in eventos %}
+  <div style="border: 1px solid gray; padding: 10px; margin: 10px;">
+    <h3>{{ evento['nombre'] }}</h3>
+    <p><strong>Fecha:</strong> {{ evento['fecha'] }}</p>
+    <p><strong>Hora:</strong> {{ evento['hora'] }}</p>
+    <p><strong>Tipo:</strong> {{ evento['tipo'] }}</p>
+    <p><strong>Lugar:</strong> {{ evento['lugar'] }}</p>
+    <p><strong>Descripción:</strong> {{ evento['descripcion'] }}</p>
+
+    <!-- Enlace para ver usuarios registrados -->
+    <a href="{{ url_for('main.ver_evento', evento_id=evento['_id']) }}">Ver usuarios registrados</a><br><br>
+
+    {% if session['usuario'] in evento.get('usuarios_registrados', []) %}
+      <!-- Botón para quitar registro -->
+      <a href="{{ url_for('main.quitar_registro', evento_id=evento['_id']) }}">Quitar mi registro</a>
+    {% else %}
+      <!-- Botón para registrarse -->
+      <a href="{{ url_for('main.registrarse_evento', evento_id=evento['_id']) }}">Registrarme</a>
+    {% endif %}
+  </div>
+{% endfor %}
+
 <a href="/logout">Cerrar Sesión</a>
