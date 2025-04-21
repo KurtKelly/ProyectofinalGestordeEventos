@@ -1,0 +1,18 @@
+<h2>Login</h2>
+<form action="/login" method="post">
+  Usuario: <input name="usuario"><br>
+  Contraseña: <input name="password" type="password"><br>
+  <button type="submit">Iniciar Sesión</button>
+</form>
+
+<h3>Registrar nuevo usuario</h3>
+<form action="/registro" method="post">
+  Usuario: <input name="usuario"><br>
+  Contraseña: <input name="password" type="password"><br>
+  Rol:
+  <select name="rol">
+    <option value="estudiante">Estudiante</option>
+    <option value="admin">Admin</option>
+  </select><br>
+  <button type="submit">Registrar</button>
+</form>

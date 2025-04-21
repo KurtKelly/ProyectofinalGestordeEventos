@@ -1,0 +1,20 @@
+<h2>Panel Administrador</h2>
+<form action="/crear" method="post">
+  <input name="nombre" placeholder="Nombre">
+  <input name="descripcion" placeholder="Descripción">
+  <input name="fecha" type="date">
+  <input name="hora" type="time">
+  <input name="lugar" placeholder="Lugar">
+  <input name="tipo" placeholder="Tipo">
+  <button type="submit">Crear Evento</button>
+</form>
+
+<h3>Eventos</h3>
+<ul>
+  {% for evento in eventos %}
+    <li>
+      {{ evento['nombre'] }} - <a href="/eliminar/{{ evento['nombre'] }}">Eliminar</a>
+    </li>
+  {% endfor %}
+</ul>
+<a href="/logout">Cerrar Sesión</a>
